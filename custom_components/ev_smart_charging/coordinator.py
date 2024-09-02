@@ -93,6 +93,7 @@ from .sensor import (
     EVSmartChargingSensor,
     EVSmartChargingSensorCharging,
     EVSmartChargingSensorChargingCurrent,
+    EVSmartChargingSensorChargingPhases,
     EVSmartChargingSensorSolarStatus,
     EVSmartChargingSensorStatus,
 )
@@ -130,6 +131,7 @@ class EVSmartChargingCoordinator:
         self.sensor = None
         self.sensor_status = None
         self.sensor_charging_current = None
+        self.sensor_charging_phases = None
         self.sensor_solar_status = None
         self.switch_active = None
         self.switch_apply_limit = None
@@ -538,6 +540,10 @@ class EVSmartChargingCoordinator:
                 self.sensor_charging_current = sensor
                 if self.solar_charging:
                     self.solar_charging.set_charging_current_sensor(sensor)
+            if isinstance(sensor, EVSmartChargingSensorChargingPhases):
+                self.sensor_charging_phases = sensor
+                if self.solar_charging:
+                    self.solar_charging.set_charging_phases_sensor(sensor)
             if isinstance(sensor, EVSmartChargingSensorSolarStatus):
                 self.sensor_solar_status = sensor
                 if self.solar_charging:
